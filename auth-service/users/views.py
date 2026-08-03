@@ -2,11 +2,20 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import RegisterSerializer
+from .rabbitmq_publisher import publish_user_created_event
 
 class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Utilisateur cree avec succes !"}, status=status.HTTP_201_CREATED)
+            
+            user = serializer.save()
+            
+            publish_user_created_event({
+                'username': getattr(user, 'username', request.data.get('username')),
+                'email': getattr(user, 'email', request.data.get('email'))
+            })
+            
+            return Response({"message": "Utilisateur crée avec succès !"}, status=status.HTTP_201_CREATED)
+            
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
