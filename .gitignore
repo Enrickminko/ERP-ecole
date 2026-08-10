@@ -1,0 +1,5 @@
+node_modules/
+.env
+*.log
+database/backup/*.sql
+!database/backup/.gitkeep

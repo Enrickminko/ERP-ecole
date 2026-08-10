@@ -1,0 +1,55 @@
+# ============================================================
+#  School ERP System - Docker Compose
+#  WEEK 1 scope: postgres + auth-service
+#  (api-gateway / academic-service are added in WEEK 3)
+# ============================================================
+services:
+  # ---------- Database (shared by all services) ----------
+  postgres:
+    image: postgres:16-alpine
+    container_name: erp-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432" # exposed so you can connect with psql/pgAdmin during the demo
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Every .sql file in ./database runs automatically, in filename order,
+      # the FIRST time the database volume is created.
+      - ./database:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - erp-net
+
+  # ---------- WEEK 1: Authentication Service ----------
+  auth-service:
+    build: ./auth-service
+    container_name: erp-auth-service
+    restart: unless-stopped
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      BCRYPT_ROUNDS: ${BCRYPT_ROUNDS}
+    ports:
+      - "4000:4000" # In WEEK 3 you may remove this so traffic must go via the gateway
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - erp-net
+
+volumes:
+  pgdata:
+
+networks:
+  erp-net:
+    driver: bridge
