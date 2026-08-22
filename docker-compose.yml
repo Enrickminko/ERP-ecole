@@ -1,6 +1,7 @@
-
+version: '3.8'
 
 services:
+
   
   api-gateway:
     build:
@@ -8,19 +9,20 @@ services:
       dockerfile: Dockerfile
     container_name: erp_api_gateway
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - auth-service
     networks:
       - erp-network
 
+  
   auth-service:
     build:
       context: ./auth-service
       dockerfile: Dockerfile
     container_name: erp_auth_service
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
       - PYTHONUNBUFFERED=1
       - RABBITMQ_HOST=rabbitmq
@@ -29,12 +31,13 @@ services:
     networks:
       - erp-network
 
+  
   rabbitmq:
     image: rabbitmq:3-management
     container_name: erp_rabbitmq
     ports:
-      - "5672:5672"  
-      - "15672:15672" 
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
