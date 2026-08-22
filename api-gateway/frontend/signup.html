@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><title>ERP - Inscription</title>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600');">
@@ -23,18 +24,21 @@
         </div>
     </div>
 
-    <!-- SCRIPT D'INSCRIPTION COMPLET -->
+
     <script>
     document.getElementById('signupForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Récupération automatique des champs du formulaire
+
         const inputs = document.querySelectorAll('input');
         const roleSelect = document.querySelector('select');
 
+        const usernameVal = inputs[0].value;
+        const emailVal = inputs[1].value;
+
         const payload = {
-            username: inputs[0].value,
-            email: inputs[1].value,
+            username: usernameVal,
+            email: emailVal,
             password: inputs[2].value,
             role: roleSelect.value
         };
@@ -49,7 +53,17 @@
             const data = await response.json();
 
             if (response.ok) {
-                alert("Compte créé avec succès ! Redirection vers la page de connexion.");
+                
+                const newInvoice = {
+                    id: "INV-2026-" + usernameVal.toUpperCase(),
+                    description: "Frais de scolarité annuels (Software Engineering)",
+                    amount: "365 000 FCFA",
+                    date: new Date().toLocaleDateString('fr-FR'),
+                    status: "En attente"
+                };
+                localStorage.setItem('userInvoice', JSON.stringify(newInvoice));
+
+                alert("Compte créé avec succès ! La facture de scolarité a été générée.");
                 window.location.href = "login.html";
             } else {
                 alert("Erreur lors de l'inscription : " + JSON.stringify(data));
@@ -61,7 +75,10 @@
     });
     </script>
 </body>
-</html>
 
-</body>
+
+
+
+
+
 </html>

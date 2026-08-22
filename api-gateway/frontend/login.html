@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><title>ERP - Connexion</title>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1600'); display: flex; align-items: center; justify-content: center;">
@@ -19,7 +20,6 @@
         </div>
     </div>
 
-   
     <script>
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -34,7 +34,6 @@
                 body: JSON.stringify({ email, password })
             });
 
-            // Détection de la limitation de taux (Rate Limiting Nginx - Semaine 3)
             if (response.status === 429) {
                 alert("⚠️ RATE LIMIT DÉPASSÉ : Plus de 10 requêtes en 1 minute !");
                 return;
@@ -43,14 +42,20 @@
             const data = await response.json();
 
             if (response.ok) {
-                // Stockage des jetons JWT dans le navigateur
+                
+                const extractedUsername = data.username || email.split('@')[0];
+                const formattedName = extractedUsername.charAt(0).toUpperCase() + extractedUsername.slice(1);
+
+                
                 localStorage.setItem('accessToken', data.access);
                 localStorage.setItem('refreshToken', data.refresh);
                 localStorage.setItem('userRole', data.role || 'Student');
+                localStorage.setItem('userName', formattedName);
+                localStorage.setItem('userEmail', email);
 
-                alert("Connexion réussie ! Jeton JWT généré.");
+                alert(`Bienvenue ${formattedName} ! Connexion réussie.`);
 
-                // Redirection RBAC selon le rôle
+            
                 if (data.role === 'Admin') {
                     window.location.href = "admin-dashboard.html";
                 } else {
@@ -66,7 +71,10 @@
     });
     </script>
 </body>
-</html>
 
-</body>
+
+
+
+
+
 </html>

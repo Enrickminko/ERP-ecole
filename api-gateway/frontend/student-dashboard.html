@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><title>ERP - Espace Étudiant</title>
+    <meta charset="UTF-8">
+    <title>Espace Étudiant</title>
 
-  <script>
-const token = localStorage.getItem('accessToken');
-if (!token) {
-    alert("Accès refusé. Veuillez vous connecter.");
-    window.location.href = "login.html";
-}
+    <script>
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+        alert("Accès refusé. Veuillez vous connecter.");
+        window.location.href = "login.html";
+    }
 
-function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
-}
-</script>
+    function logout() {
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    </script>
 
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -28,19 +29,19 @@ function logout() {
                 <a href="grades.html" class="nav-link">📝 Relevé de Notes</a>
                 <a href="invoices.html" class="nav-link">💳 Frais & Factures</a>
             </div>
-            <a href="login.html" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
+            <a href="javascript:void(0)" onclick="logout()" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
         </aside>
 
         <main class="main-view">
             <div class="glass-card" style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                    <h1 style="color: var(--dark-emerald); font-size: 28px;">Bienvenue, Minko Schneider</h1>
-                    <p style="color: var(--text-muted); font-size: 14px;">Génie Logiciel — Matricule : ICTU20222928</p>
+                    <h1 id="welcomeUser" style="color: var(--dark-emerald); font-size: 28px;">Bienvenue, Étudiant</h1>
+                    <p style="color: var(--text-muted); font-size: 14px;">Génie Logiciel — ICT University</p>
                 </div>
                 <span style="background: #d1fae5; color: var(--dark-emerald); padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 12px;">Inscrit - Semestre 2</span>
             </div>
 
-            <!-- Stats Mises à jour -->
+
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
                 <div class="stat-card">
                     <div class="stat-icon">📚</div>
@@ -71,5 +72,16 @@ function logout() {
             </div>
         </main>
     </div>
+
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const userName = localStorage.getItem('userName') || 'Minko Schneider';
+        const welcomeHeading = document.getElementById('welcomeUser');
+        if (welcomeHeading) {
+            welcomeHeading.textContent = `Bienvenue, ${userName}`;
+        }
+    });
+    </script>
 </body>
 </html>

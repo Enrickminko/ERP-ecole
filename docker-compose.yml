@@ -26,6 +26,17 @@ services:
     networks:
       - erp-network
 
+  finance-service:
+    build: ./finance-service
+    container_name: erp_finance_service
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - rabbitmq
+    networks:
+      - erp-network
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: erp_rabbitmq

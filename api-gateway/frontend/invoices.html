@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><title>ERP - Gestion Financière</title>
-
-<script>
-const token = localStorage.getItem('accessToken');
-if (!token) {
-    alert("Accès refusé. Veuillez vous connecter.");
-    window.location.href = "login.html";
-}
-
-function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
-}
-</script>
-
+    <meta charset="UTF-8">
+    <title>Gestion Financière</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1600');">
@@ -33,24 +20,66 @@ function logout() {
         <main class="main-view">
             <div class="glass-card">
                 <h2 style="color: var(--dark-emerald); margin-bottom: 15px;">Facturation & Inscriptions (10 UEs)</h2>
+                
                 <div style="background: #ecfdf5; border-left: 4px solid var(--primary-emerald); padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; color: var(--dark-emerald);">
-                    ⚡ **Événement RabbitMQ Sync :** Facture émise automatiquement lors de la validation du package de 10 cours.
+                    ⚡ <strong>Événement RabbitMQ Sync :</strong> Facture émise automatiquement par le service Finance lors de la création de votre compte.
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                        <div>
-                            <h4 style="color: var(--dark-emerald);">Scolarité Générale (10 Modules)</h4>
-                            <p style="font-size: 12px; color: var(--text-muted);">Référence : #INV-2026-SEN-10COURS</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <span style="font-weight: 800; color: var(--primary-emerald); font-size: 18px;">450,000 FCFA</span>
-                            <p style="font-size: 11px; color: var(--primary-emerald); font-weight: 700;">Payé par Virement</p>
-                        </div>
-                    </div>
+            
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                        <thead>
+                            <tr style="background: #f8fafc; text-align: left; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid #e2e8f0;">
+                                <th style="padding: 12px 16px;">Référence</th>
+                                <th style="padding: 12px 16px;">Description</th>
+                                <th style="padding: 12px 16px;">Montant</th>
+                                <th style="padding: 12px 16px;">Date</th>
+                                <th style="padding: 12px 16px;">Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceTableBody">
+                        
+                            <tr style="border-bottom: 1px solid #f1f5f9; font-size: 14px;">
+                                <td style="padding: 14px 16px;"><strong>#INV-2026-SEN-10COURS</strong></td>
+                                <td style="padding: 14px 16px;">Scolarité Générale (10 Modules)</td>
+                                <td style="padding: 14px 16px;"><strong style="color: var(--primary-emerald);">450 000 FCFA</strong></td>
+                                <td style="padding: 14px 16px;">15/08/2026</td>
+                                <td style="padding: 14px 16px;"><span style="background: #dcfce7; color: #15803d; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 700;">Payé</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
             </div>
         </main>
     </div>
+
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedInvoice = localStorage.getItem('userInvoice');
+        const tableBody = document.getElementById('invoiceTableBody');
+
+        if (savedInvoice && tableBody) {
+            const invoice = JSON.parse(savedInvoice);
+
+            
+            const newRowHtml = `
+                <tr style="background-color: #f0fdf4; border-left: 4px solid var(--primary-emerald); border-bottom: 1px solid #e2e8f0; font-size: 14px;">
+                    <td style="padding: 14px 16px;"><strong>#${invoice.id}</strong></td>
+                    <td style="padding: 14px 16px;">${invoice.description}</td>
+                    <td style="padding: 14px 16px;"><strong style="color: var(--primary-emerald);">${invoice.amount}</strong></td>
+                    <td style="padding: 14px 16px;">${invoice.date}</td>
+                    <td style="padding: 14px 16px;">
+                        <span style="background-color: #fef3c7; color: #d97706; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 700;">${invoice.status}</span>
+                    </td>
+                </tr>
+            `;
+
+            
+            tableBody.innerHTML = newRowHtml + tableBody.innerHTML;
+        }
+    });
+    </script>
 </body>
 </html>

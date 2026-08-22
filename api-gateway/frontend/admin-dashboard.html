@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><title>ERP - Administration</title>
+    <meta charset="UTF-8">
+    <title>Administration</title>
 
-  <script>
-const token = localStorage.getItem('accessToken');
-if (!token) {
-    alert("Accès refusé. Veuillez vous connecter.");
-    window.location.href = "login.html";
-}
+    <script>
+    const token = localStorage.getItem('accessToken');
+    const role = localStorage.getItem('userRole');
 
-function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
-}
-</script>
+    if (!token) {
+        alert("Accès refusé. Veuillez vous connecter.");
+        window.location.href = "login.html";
+    } else if (role !== 'Admin') {
+        alert("Accès réservé aux administrateurs !");
+        window.location.href = "student-dashboard.html";
+    }
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    </script>
 
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -27,21 +33,56 @@ function logout() {
                 <a href="payroll.html" class="nav-link">👥 Ressources Humaines</a>
                 <a href="invoices.html" class="nav-link">💰 Financement</a>
             </div>
-            <a href="login.html" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
+            <a href="javascript:void(0)" onclick="logout()" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
         </aside>
 
         <main class="main-view">
-            <div class="glass-card" style="margin-bottom: 30px;">
-                <h1 style="color: var(--dark-emerald);">Panneau de Contrôle Général</h1>
-                <p style="color: var(--text-muted);">Supervision des microservices et gestion des permissions utilisateurs.</p>
+            <div class="glass-card" style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 id="adminWelcome" style="color: var(--dark-emerald);">Panneau de Contrôle Général</h1>
+                    <p style="color: var(--text-muted);">Supervision des microservices et gestion des permissions utilisateurs.</p>
+                </div>
+                <span style="background: #fee2e2; color: #dc2626; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 12px;">Accès Administrateur</span>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                <div class="stat-card"><div class="stat-icon">👥</div><div><h4 style="color: var(--text-muted); font-size: 12px;">Étudiants Actifs</h4><p style="font-size: 22px; font-weight: 800;">1,420</p></div></div>
-                <div class="stat-card"><div class="stat-icon">🖥️</div><div><h4 style="color: var(--text-muted); font-size: 12px;">État API Gateway</h4><p style="font-size: 22px; font-weight: 800; color: var(--primary-emerald);">Opérationnel</p></div></div>
-                <div class="stat-card"><div class="stat-icon">⚡</div><div><h4 style="color: var(--text-muted); font-size: 12px;">Événements RabbitMQ</h4><p style="font-size: 22px; font-weight: 800;">245 msg/min</p></div></div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 12px;">Étudiants Actifs</h4>
+                        <p id="activeStudentsCount" style="font-size: 22px; font-weight: 800;">1,420</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🖥️</div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 12px;">État API Gateway</h4>
+                        <p style="font-size: 22px; font-weight: 800; color: var(--primary-emerald);">Opérationnel</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 12px;">Événements RabbitMQ</h4>
+                        <p style="font-size: 22px; font-weight: 800;">245 msg/min</p>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const adminName = localStorage.getItem('userName') || 'Administrateur';
+        const welcomeHeading = document.getElementById('adminWelcome');
+        if (welcomeHeading) {
+            welcomeHeading.textContent = `Bonjour, ${adminName} 👋`;
+        }
+
+        if (localStorage.getItem('userInvoice')) {
+            document.getElementById('activeStudentsCount').textContent = "1,421";
+        }
+    });
+    </script>
 </body>
 </html>
