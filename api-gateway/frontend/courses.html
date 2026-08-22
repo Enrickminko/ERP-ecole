@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ERP - Liste des Cours (10 UEs)</title>
+
+<script>
+const token = localStorage.getItem('accessToken');
+if (!token) {
+    alert("Accès refusé. Veuillez vous connecter.");
+    window.location.href = "login.html";
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+</script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1600');">
+    <div class="content-wrapper app-layout">
+        <aside class="sidebar">
+            <div>
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 30px;">🎓 ICT<span style="color: var(--accent-mint);">.ERP</span></h2>
+                <a href="student-dashboard.html" class="nav-link">📊 Tableau de Bord</a>
+                <a href="courses.html" class="nav-link active">📚 Mes 10 Cours</a>
+                <a href="grades.html" class="nav-link">📝 Relevé de Notes</a>
+                <a href="invoices.html" class="nav-link">💳 Frais & Factures</a>
+            </div>
+            <a href="login.html" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
+        </aside>
+
+        <main class="main-view">
+            <div class="glass-card" style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 style="color: var(--dark-emerald);">Catalogue des 10 Unités d'Enseignement</h2>
+                    <p style="color: var(--text-muted); font-size: 14px;">Programme Académique — Software Engineering</p>
+                </div>
+                <span style="background: var(--primary-emerald); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 12px;">10 UEs Inscrites</span>
+            </div>
+
+            <!-- Grille des 10 Cours -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                
+                <!-- Cours 1 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">SEN4121</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Large System Environment</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Architecture microservices, Docker, API Gateway, RabbitMQ et sécurité OWASP.</p>
+                </div>
+
+                <!-- Cours 2 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">SEN4110</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Software Engineering Principles</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Spécifications SRS, modélisation UML complète et gestion de projet Agile.</p>
+                </div>
+
+                <!-- Cours 3 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">CSC3105</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Database Management Systems</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Conception ERD, normalisation 3NF, requêtes SQL avancées et indexation PostgreSQL.</p>
+                </div>
+
+                <!-- Cours 4 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">WEB3201</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Full-Stack Web Development</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Développement d'applications Web interactives avec Django, HTMX, HTML5 et CSS3.</p>
+                </div>
+
+                <!-- Cours 5 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">SEC4102</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Cybersecurity & Network Auditing</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Analyse de trafic Wireshark, tests d'intrusion Kali Linux et audits Nmap.</p>
+                </div>
+
+                <!-- Cours 6 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">OPS3204</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">DevOps & Cloud Deployment</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Conteneurisation Docker Hub, hébergement VPS Ubuntu et monitoring de services.</p>
+                </div>
+
+                <!-- Cours 7 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">CSC2201</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Data Structures & Algorithms</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Optimisation d'algorithmes, structures de données complexes et calcul de complexité.</p>
+                </div>
+
+                <!-- Cours 8 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">NET3102</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Computer Networks & Protocols</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Modèle OSI, routage IP, protocoles TCP/UDP, SSH et configuration de sous-réseaux.</p>
+                </div>
+
+                <!-- Cours 9 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">AI4201</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">Artificial Intelligence & Machine Learning</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Introduction aux modèles prédictifs, réseaux de neurones et intégration d'APIs IA.</p>
+                </div>
+
+                <!-- Cours 10 -->
+                <div class="glass-card" style="padding: 20px;">
+                    <span style="background: #d1fae5; color: var(--dark-emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">MGT4100</span>
+                    <h3 style="margin: 8px 0; color: var(--dark-emerald); font-size: 16px;">IT Risk & Financial Management</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Évaluation des risques informatiques, gestion d'incertitudes et budgets d'infrastructures.</p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>

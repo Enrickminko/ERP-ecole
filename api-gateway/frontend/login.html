@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><title>ERP - Connexion</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1600'); display: flex; align-items: center; justify-content: center;">
+    <div class="content-wrapper" style="display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="glass-card" style="width: 100%; max-width: 440px; text-align: center;">
+            <div style="width: 60px; height: 60px; background: #ecfdf5; color: var(--primary-emerald); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 15px;">🔒</div>
+            <h2 style="color: var(--dark-emerald); font-size: 26px; font-weight: 800;">Connexion ERP</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 25px;">Saisissez vos identifiants institutionnels</p>
+            <form id="loginForm">
+                <div class="form-group"><label>Email Institutionnel</label><input type="email" id="email" placeholder="etudiant@ictuniversity.edu.cm" required></div>
+                <div class="form-group"><label>Mot de passe</label><input type="password" id="password" placeholder="••••••••" required></div>
+                <button type="submit" class="btn-emerald" style="width: 100%; margin-top: 10px;">Se Connecter</button>
+            </form>
+            <p style="margin-top: 20px; font-size: 13px; color: var(--text-muted);">Nouveau membre ? <a href="signup.html" style="color: var(--primary-emerald); font-weight: 700; text-decoration: none;">Créer un compte</a></p>
+        </div>
+    </div>
+
+   
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('/api/v1/auth/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            // Détection de la limitation de taux (Rate Limiting Nginx - Semaine 3)
+            if (response.status === 429) {
+                alert("⚠️ RATE LIMIT DÉPASSÉ : Plus de 10 requêtes en 1 minute !");
+                return;
+            }
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Stockage des jetons JWT dans le navigateur
+                localStorage.setItem('accessToken', data.access);
+                localStorage.setItem('refreshToken', data.refresh);
+                localStorage.setItem('userRole', data.role || 'Student');
+
+                alert("Connexion réussie ! Jeton JWT généré.");
+
+                // Redirection RBAC selon le rôle
+                if (data.role === 'Admin') {
+                    window.location.href = "admin-dashboard.html";
+                } else {
+                    window.location.href = "student-dashboard.html";
+                }
+            } else {
+                alert("Échec de connexion : " + (data.detail || "Identifiants invalides"));
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erreur de communication avec le serveur.");
+        }
+    });
+    </script>
+</body>
+</html>
+
+</body>
+</html>

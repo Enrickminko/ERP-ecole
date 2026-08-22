@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><title>ERP - Administration</title>
+
+  <script>
+const token = localStorage.getItem('accessToken');
+if (!token) {
+    alert("Accès refusé. Veuillez vous connecter.");
+    window.location.href = "login.html";
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+</script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600');">
+    <div class="content-wrapper app-layout">
+        <aside class="sidebar">
+            <div>
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 30px;">⚙️ ADMIN<span style="color: var(--accent-mint);">.ERP</span></h2>
+                <a href="admin-dashboard.html" class="nav-link active">📈 Vue d'ensemble</a>
+                <a href="payroll.html" class="nav-link">👥 Ressources Humaines</a>
+                <a href="invoices.html" class="nav-link">💰 Financement</a>
+            </div>
+            <a href="login.html" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
+        </aside>
+
+        <main class="main-view">
+            <div class="glass-card" style="margin-bottom: 30px;">
+                <h1 style="color: var(--dark-emerald);">Panneau de Contrôle Général</h1>
+                <p style="color: var(--text-muted);">Supervision des microservices et gestion des permissions utilisateurs.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div class="stat-card"><div class="stat-icon">👥</div><div><h4 style="color: var(--text-muted); font-size: 12px;">Étudiants Actifs</h4><p style="font-size: 22px; font-weight: 800;">1,420</p></div></div>
+                <div class="stat-card"><div class="stat-icon">🖥️</div><div><h4 style="color: var(--text-muted); font-size: 12px;">État API Gateway</h4><p style="font-size: 22px; font-weight: 800; color: var(--primary-emerald);">Opérationnel</p></div></div>
+                <div class="stat-card"><div class="stat-icon">⚡</div><div><h4 style="color: var(--text-muted); font-size: 12px;">Événements RabbitMQ</h4><p style="font-size: 22px; font-weight: 800;">245 msg/min</p></div></div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

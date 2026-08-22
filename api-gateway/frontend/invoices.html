@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><title>ERP - Gestion Financière</title>
+
+<script>
+const token = localStorage.getItem('accessToken');
+if (!token) {
+    alert("Accès refusé. Veuillez vous connecter.");
+    window.location.href = "login.html";
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+</script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1600');">
+    <div class="content-wrapper app-layout">
+        <aside class="sidebar">
+            <div>
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 30px;">💳 FINANCE</h2>
+                <a href="student-dashboard.html" class="nav-link">📊 Tableau de Bord</a>
+                <a href="courses.html" class="nav-link">📚 Mes 10 Cours</a>
+                <a href="invoices.html" class="nav-link active">💳 Frais & Factures</a>
+            </div>
+            <a href="login.html" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
+        </aside>
+
+        <main class="main-view">
+            <div class="glass-card">
+                <h2 style="color: var(--dark-emerald); margin-bottom: 15px;">Facturation & Inscriptions (10 UEs)</h2>
+                <div style="background: #ecfdf5; border-left: 4px solid var(--primary-emerald); padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; color: var(--dark-emerald);">
+                    ⚡ **Événement RabbitMQ Sync :** Facture émise automatiquement lors de la validation du package de 10 cours.
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                        <div>
+                            <h4 style="color: var(--dark-emerald);">Scolarité Générale (10 Modules)</h4>
+                            <p style="font-size: 12px; color: var(--text-muted);">Référence : #INV-2026-SEN-10COURS</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-weight: 800; color: var(--primary-emerald); font-size: 18px;">450,000 FCFA</span>
+                            <p style="font-size: 11px; color: var(--primary-emerald); font-weight: 700;">Payé par Virement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

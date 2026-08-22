@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><title>ERP - Inscription</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1600');">
+    <div class="content-wrapper" style="display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+        <div class="glass-card" style="width: 100%; max-width: 480px;">
+            <h2 style="color: var(--dark-emerald); font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 5px;">Créer un Compte</h2>
+            <p style="color: var(--text-muted); font-size: 13px; text-align: center; margin-bottom: 20px;">Rejoignez le réseau académique ERP</p>
+            <form id="signupForm">
+                <div class="form-group"><label>Nom complet</label><input type="text" placeholder="Minko Schneider" required></div>
+                <div class="form-group"><label>Adresse Email</label><input type="email" placeholder="schneider@ictuniversity.edu.cm" required></div>
+                <div class="form-group"><label>Mot de passe</label><input type="password" placeholder="••••••••" required></div>
+                <div class="form-group">
+                    <label>Rôle Système</label>
+                    <select required><option value="Student">Étudiant (Student)</option><option value="Admin">Administrateur (Admin)</option></select>
+                </div>
+                <button type="submit" class="btn-emerald" style="width: 100%;">Valider l'Inscription</button>
+            </form>
+            <p style="margin-top: 15px; font-size: 13px; text-align: center;"><a href="login.html" style="color: var(--primary-emerald); text-decoration: none; font-weight: 700;">← Déjà inscrit ? Se connecter</a></p>
+        </div>
+    </div>
+
+    <!-- SCRIPT D'INSCRIPTION COMPLET -->
+    <script>
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Récupération automatique des champs du formulaire
+        const inputs = document.querySelectorAll('input');
+        const roleSelect = document.querySelector('select');
+
+        const payload = {
+            username: inputs[0].value,
+            email: inputs[1].value,
+            password: inputs[2].value,
+            role: roleSelect.value
+        };
+
+        try {
+            const response = await fetch('/api/v1/auth/register/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Compte créé avec succès ! Redirection vers la page de connexion.");
+                window.location.href = "login.html";
+            } else {
+                alert("Erreur lors de l'inscription : " + JSON.stringify(data));
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erreur réseau : Impossible de contacter l'API Gateway.");
+        }
+    });
+    </script>
+</body>
+</html>
+
+</body>
+</html>

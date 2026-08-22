@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><title>ERP - Espace Étudiant</title>
+
+  <script>
+const token = localStorage.getItem('accessToken');
+if (!token) {
+    alert("Accès refusé. Veuillez vous connecter.");
+    window.location.href = "login.html";
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+</script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1600');">
+    <div class="content-wrapper app-layout">
+        <aside class="sidebar">
+            <div>
+                <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 30px;">🎓 ICT<span style="color: var(--accent-mint);">.ERP</span></h2>
+                <a href="student-dashboard.html" class="nav-link active">📊 Tableau de Bord</a>
+                <a href="courses.html" class="nav-link">📚 Mes 10 Cours</a>
+                <a href="grades.html" class="nav-link">📝 Relevé de Notes</a>
+                <a href="invoices.html" class="nav-link">💳 Frais & Factures</a>
+            </div>
+            <a href="login.html" class="nav-link" style="color: #f87171;">🚪 Déconnexion</a>
+        </aside>
+
+        <main class="main-view">
+            <div class="glass-card" style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 style="color: var(--dark-emerald); font-size: 28px;">Bienvenue, Minko Schneider</h1>
+                    <p style="color: var(--text-muted); font-size: 14px;">Génie Logiciel — Matricule : ICTU20222928</p>
+                </div>
+                <span style="background: #d1fae5; color: var(--dark-emerald); padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 12px;">Inscrit - Semestre 2</span>
+            </div>
+
+            <!-- Stats Mises à jour -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 12px;">Programme Actif</h4>
+                        <p style="font-size: 22px; font-weight: 800;">10 UEs Inscrites</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 12px;">Moyenne Générale</h4>
+                        <p style="font-size: 22px; font-weight: 800;">3.85 / 4.0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💳</div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 12px;">Statut Financier</h4>
+                        <p style="font-size: 22px; font-weight: 800; color: var(--primary-emerald);">Scolarité Réglée</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h3 style="color: var(--dark-emerald); margin-bottom: 15px;">Aperçu Rapide du Semestre</h3>
+                <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">Vous êtes inscrit à 10 modules couvrant le Génie Logiciel, la Sécurité, le Web Full-Stack et les Systèmes Répartis. Vos accès aux évaluations en ligne et aux projets académiques sont pleinement opérationnels.</p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
